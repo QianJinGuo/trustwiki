@@ -1,8 +1,10 @@
 # Reproduce the demo GIF: vhs assets/demo.tape  (requires charmbracelet vhs)
 Output assets/demo.gif
-RequireSize 900x500
-Theme "Dracula"
+Set Shell zsh
+Set FontSize 15
+Set Width 900
+Set Height 500
+Set Theme "Dracula"
 Type "npx trustwiki lint templates/demo-vault"
 Enter
-Sleep 3s
-Sleep 5s
+Sleep 6s
