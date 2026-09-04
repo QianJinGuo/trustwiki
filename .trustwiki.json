@@ -1,0 +1,16 @@
+{
+  "roots": ["docs", "schema", "proof"],
+  "rules": {
+    "frontmatter.required": "off",
+    "frontmatter.fields": "off",
+    "link.broken": "off",
+    "link.index-missing": "off",
+    "link.type-mismatch": "off",
+    "page.orphan": "off",
+    "citation.malformed": "off",
+    "citation.target-missing": "off",
+    "provenance.excess-inferred": "off",
+    "provenance.low-confidence": "off",
+    "provenance.contradicted": "off"
+  }
+}

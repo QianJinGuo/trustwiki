@@ -1,0 +1,5 @@
+{
+  "roots": ["notes", "sources"],
+  "index": "index.md",
+  "sourceDir": "sources"
+}
