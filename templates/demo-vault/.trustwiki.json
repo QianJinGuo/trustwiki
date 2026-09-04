@@ -1,0 +1,6 @@
+{
+  "roots": ["notes", "sources"],
+  "index": "index.md",
+  "sourceDir": "sources",
+  "rules": { "page.orphan": "off" }
+}
