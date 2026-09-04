@@ -5,7 +5,7 @@
   "type": "module",
   "bin": { "trustwiki": "cli/bin.js" },
   "engines": { "node": ">=18" },
-  "scripts": { "test": "node --test test/" },
+  "scripts": { "test": "node --test test/*.test.js" },
   "license": "MIT",
   "repository": "github:QianJinGuo/trustwiki"
 }
