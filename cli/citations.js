@@ -25,6 +25,7 @@ function parseSource(part) {
 function finish(path, start, end, part) {
   path = path.trim();
   if (!path || /\s/.test(path)) return { ok: false, reason: `bad source syntax: "${part}"` };
+  if (start !== null && (start < 1 || end < 1)) return { ok: false, reason: `line numbers must be positive in "${part}"` };
   if (start !== null && start > end) return { ok: false, reason: `reversed line range in "${part}" (start > end)` };
   return { ok: true, source: { path, start, end } };
 }

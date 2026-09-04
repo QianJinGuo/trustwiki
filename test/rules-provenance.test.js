@@ -2,19 +2,19 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { RULES } from '../cli/rules/index.js';
 
-const mk = (relPath, { fields = {}, paragraphs = [], body = '' } = {}) =>
-  ({ relPath, fm: { ok: true, fields }, paragraphs, body, links: [], citations: [], malformed: [], text: '', bodyStartLine: 1 });
+const mk = (relPath, { fields = {}, paragraphs = [], body = '', citations = [] } = {}) =>
+  ({ relPath, fm: { ok: true, fields }, paragraphs, body, links: [], citations, malformed: [], text: '', bodyStartLine: 1 });
 const model = (files, cfg = {}) => ({ files, config: { inferredThreshold: 0.3, confidenceFloor: 0.5, inferredSkipTypes: ['source'], ...cfg } });
 
 test('excess-inferred: >threshold uncited prose, skips source type, first uncited line', () => {
   const r = RULES.find(x => x.id === 'provenance.excess-inferred');
   const ps = [
-    { text: 'cited', startLine: 10, cited: true, isProse: true },
-    { text: 'uncited one', startLine: 14, cited: false, isProse: true },
-    { text: 'uncited two', startLine: 16, cited: false, isProse: true },
+    { text: 'cited', startLine: 10, isProse: true },
+    { text: 'uncited one', startLine: 14, isProse: true },
+    { text: 'uncited two', startLine: 16, isProse: true },
   ];
   const fs = r.run(model([
-    mk('notes/a.md', { paragraphs: ps, fields: { type: 'note' } }),
+    mk('notes/a.md', { paragraphs: ps, fields: { type: 'note' }, citations: [{ line: 10, sources: [{ path: 's.md', start: null, end: null }] }] }),
     mk('sources/b.md', { paragraphs: ps, fields: { type: 'source' } }),
   ]));
   assert.deepEqual(fs.map(f => [f.file, f.line]), [['notes/a.md', 14]]);

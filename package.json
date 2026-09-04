@@ -6,6 +6,7 @@
   "bin": { "trustwiki": "cli/bin.js" },
   "engines": { "node": ">=18" },
   "scripts": { "test": "node --test test/*.test.js" },
+  "files": ["cli/", "schema/", "templates/", "docs/", "SKILL.md", "README.md", "README.zh.md", "proof/"],
   "license": "MIT",
   "repository": "github:QianJinGuo/trustwiki"
 }

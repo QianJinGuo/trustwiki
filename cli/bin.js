@@ -3,14 +3,24 @@ import { loadConfig } from './config.js';
 import { lintVault } from './engine.js';
 import { formatText, formatJson } from './report.js';
 
+function usage() {
+  console.error('usage: trustwiki lint <vault-path> [--json] [--config <file>]');
+}
+
 const args = process.argv.slice(2);
 if (args[0] !== 'lint' || !args[1] || args[1].startsWith('--')) {
-  console.error('usage: trustwiki lint <vault-path> [--json] [--config <file>]');
-  process.exit(2);
+  usage(); process.exit(2);
 }
 const vault = args[1];
-const json = args.includes('--json');
-const configFlag = args.includes('--config') ? args[args.indexOf('--config') + 1] : undefined;
+let json = false, configFlag, bad;
+for (let i = 2; i < args.length; i++) {
+  if (args[i] === '--json') json = true;
+  else if (args[i] === '--config') {
+    if (i + 1 >= args.length) { bad = '--config requires a file argument'; break; }
+    configFlag = args[++i];
+  } else { bad = `unknown argument: ${args[i]}`; break; }
+}
+if (bad) { console.error(`trustwiki: ${bad}`); usage(); process.exit(2); }
 const { config, error } = await loadConfig(vault, configFlag);
 if (error) { console.error(`trustwiki: ${error.message}`); process.exit(2); }
 const findings = await lintVault(config.vaultPath, config);

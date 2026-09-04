@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import { RULES } from '../cli/rules/index.js';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 
 const FIXTURES_DIR = join(dirname(fileURLToPath(import.meta.url)), 'fixtures', 'citation-fs');
 mkdirSync(join(FIXTURES_DIR, 'sources'), { recursive: true });
-writeFileSync(join(FIXTURES_DIR, 'sources', 'real.md'), 'real\n');
+const fixture = join(FIXTURES_DIR, 'sources', 'real.md');
+if (!existsSync(fixture)) writeFileSync(fixture, 'real\n'); // tracked file; write only if absent
 
 const mk = (relPath, citations, malformed) => ({
   relPath, citations, malformed, fm: { ok: true, fields: {} }, links: [], paragraphs: [], body: '', bodyStartLine: 1, text: '',

@@ -10,6 +10,7 @@ const model = (files, cfg = {}) => ({
   files,
   config: { minOutboundLinks: 2, index: 'index.md', sourceDir: 'sources', typeByDir: { notes: 'note' }, ...cfg },
   indexEntries: new Set(['notes/a']),
+  indexLines: new Map(),
   filePaths: new Set(files.map(f => f.relPath)),
 });
 

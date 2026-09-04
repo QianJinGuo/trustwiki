@@ -1,3 +1,6 @@
+const CONTROL = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g;
+const clean = s => String(s).replace(CONTROL, '');
+
 export function formatText(findings) {
   const lines = [];
   const byFile = new Map();
@@ -6,10 +9,10 @@ export function formatText(findings) {
     byFile.get(f.file).push(f);
   }
   for (const [file, fs] of [...byFile.entries()].sort()) {
-    lines.push(`${file}`);
+    lines.push(clean(file));
     for (const f of fs.sort((a, b) => a.line - b.line)) {
-      lines.push(`  L${String(f.line).padEnd(4)} ${f.severity.padEnd(5)} ${f.rule.padEnd(30)} ${f.message}`);
-      if (f.hint) lines.push(`      ↳ ${f.hint}`);
+      lines.push(`  L${String(f.line).padEnd(4)} ${f.severity.padEnd(5)} ${clean(f.rule).padEnd(30)} ${clean(f.message)}`);
+      if (f.hint) lines.push(`      ↳ ${clean(f.hint)}`);
     }
   }
   const errors = findings.filter(f => f.severity === 'error').length;

@@ -1572,7 +1572,7 @@ process.exit(gaps.length ? 1 : 0);
 
 - [ ] **Step 2: Run against the private wiki**
 
-Run: `TRUSTWIKI_PARITY_VAULT=/Users/jinguo/wiki node scripts/parity-check.mjs`
+Run: `TRUSTWIKI_PARITY_VAULT=<path-to-private-vault> node scripts/parity-check.mjs`
 Expected: `PARITY OK`. If gaps: fix the rule, not the harness. Known legitimate diffs to document in the commit message (not gaps): wiki-lint's index-header page-count drift check and glued-line detection stay private (not in the 12-rule v1 scope).
 
 - [ ] **Step 3: Record the parity result in docs (M2 acceptance evidence)**
@@ -1653,7 +1653,7 @@ Then these `##` sections, each ≤30 lines, each ending with a "violation conseq
 
 - [ ] **Step 2: Verify constraints**
 
-Run: `wc -l SKILL.md` (must be ≤200) and `grep -c 'Users/jinguo\|/wiki/' SKILL.md` (must be 0 — private-path leak check).
+Run: `wc -l SKILL.md` (must be ≤200) and `grep -cE '/home/|/Users/' SKILL.md` (must be 0 — private-path leak check).
 
 - [ ] **Step 3: Commit**
 
@@ -1846,7 +1846,7 @@ Expected: 404 (free). If taken: fall back to `@trustwiki/cli` scope or `trustwik
 
 - [ ] **Step 2: Final private-leak sweep**
 
-Run: `grep -rn "Users/jinguo\|/Users/jinguo/wiki\|wechat\|hermes" --include="*.md" --include="*.js" --include="*.json" . | grep -v node_modules | grep -v PARITY`
+Run: `grep -rnE "/home/|/Users/|wechat|hermes" --include="*.md" --include="*.js" --include="*.json" . | grep -v node_modules | grep -v PARITY`
 Expected: zero hits (PARITY env var name in scripts/parity-check.mjs is the sole allowed mention of nothing private — verify no path values).
 
 - [ ] **Step 3: Publish**
