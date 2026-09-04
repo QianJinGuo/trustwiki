@@ -3,10 +3,29 @@
   "version": "0.1.0-alpha.0",
   "description": "Provenance linter and method for agent-maintained knowledge bases — every claim cited, contradictions surfaced, rot detected.",
   "type": "module",
-  "bin": { "trustwiki": "cli/bin.js" },
-  "engines": { "node": ">=18" },
-  "scripts": { "test": "node --test test/*.test.js" },
-  "files": ["cli/", "schema/", "templates/", "docs/", "SKILL.md", "README.md", "README.zh.md", "proof/"],
+  "bin": {
+    "trustwiki": "cli/bin.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "files": [
+    "cli",
+    "schema",
+    "templates",
+    "SKILL.md",
+    "README.md",
+    "README.zh.md",
+    "docs/method.md",
+    "docs/method.zh.md",
+    "proof"
+  ],
   "license": "MIT",
-  "repository": "github:QianJinGuo/trustwiki"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QianJinGuo/trustwiki.git"
+  }
 }
