@@ -15,4 +15,5 @@ const { config, error } = await loadConfig(vault, configFlag);
 if (error) { console.error(`trustwiki: ${error.message}`); process.exit(2); }
 const findings = await lintVault(config.vaultPath, config);
 console.log(json ? formatJson(findings) : formatText(findings));
-process.exit(findings.some(f => f.severity === 'error') ? 1 : 0);
+// exitCode (not process.exit) so large stdout writes flush before teardown
+process.exitCode = findings.some(f => f.severity === 'error') ? 1 : 0;

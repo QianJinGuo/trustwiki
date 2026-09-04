@@ -171,6 +171,10 @@ SHA-256 增量存储、微信/邮件），保留可迁移的纪律骨架：
    README/STATS 数字断言由 CI 脚本复核（G4 的机器化）。
 4. **迁移对照**：用 wiki 私有库当回归集（本地跑，不入 repo）——泛化版在
    自己 wiki 上必须复现 wiki-lint 的全部 findings 才算迁移完成。
+   > **执行记录（2026-09-05）**：`PARITY OK`——wiki 上触发的 3 类
+   > （orphan / excess-inferred / contradicted）全部被对应规则覆盖；
+   > trustwiki 另以更严默认值报 15,052 findings（4.5MB JSON 全量可解析）。
+   > 迁移中发现并修复 bin 的 `process.exit()` 截断大输出 bug（改 `exitCode`）。
 
 ## 6. 里程碑
 
