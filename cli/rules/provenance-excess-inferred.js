@@ -4,7 +4,10 @@ export const rule = {
     const out = [];
     for (const f of model.files) {
       if (!f.fm.ok) continue;
-      if (model.config.inferredSkipTypes.includes(f.fm.fields.type)) continue;
+      // exemption is location-based AND label-based: raw pages often lack the
+      // `source` type label, but living under sourceDir is dispositive
+      const underSourceDir = model.config.sourceDir && f.relPath.startsWith(`${model.config.sourceDir}/`);
+      if (model.config.inferredSkipTypes.includes(f.fm.fields.type) || underSourceDir) continue;
       const prose = f.paragraphs.filter(p => p.isProse && p.text);
       if (!prose.length) continue;
       // a paragraph counts as cited only when a citation sits on its final line
