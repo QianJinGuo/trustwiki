@@ -1,8 +1,14 @@
 const BASE = ['title', 'created', 'updated', 'type', 'tags'];
 const SOURCE = ['source_url', 'ingested', 'sha256'];
-const DATE_RE = /^\d{4}-\d{2}-\d{2}/;
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const SHA_RE = /^[0-9a-f]{64}$/i;
 const STATES = new Set(['extracted', 'merged', 'inferred', 'ambiguous']);
+
+function validDate(v) {
+  if (!DATE_RE.test(v)) return false;
+  const d = new Date(v + 'T00:00:00Z'); // calendar check, timezone-stable
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v;
+}
 
 export const rule = {
   id: 'frontmatter.fields',
@@ -18,7 +24,10 @@ export const rule = {
         hint: 'see schema/spec.md — Frontmatter' });
       const bad = [];
       for (const k of ['created', 'updated']) {
-        if (f.fm.fields[k] && !DATE_RE.test(f.fm.fields[k])) bad.push(`${k} is not an ISO date`);
+        if (f.fm.fields[k] && !validDate(f.fm.fields[k])) bad.push(`${k} is not a valid ISO date`);
+      }
+      if (isSource && f.fm.fields.ingested && !validDate(f.fm.fields.ingested)) {
+        bad.push('ingested is not a valid ISO date');
       }
       if (f.fm.fields.provenance_state && !STATES.has(f.fm.fields.provenance_state)) {
         bad.push(`provenance_state "${f.fm.fields.provenance_state}" is not one of extracted|merged|inferred|ambiguous`);

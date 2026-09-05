@@ -1,4 +1,6 @@
-const CONTROL = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g;
+// strip ALL control chars including CR/LF and C1 — a hostile vault must not be
+// able to forge report lines or overwrite terminal rows via file names
+const CONTROL = /[\x00-\x1F\x7F-\x9F]/g;
 const clean = s => String(s).replace(CONTROL, '');
 
 export function formatText(findings) {

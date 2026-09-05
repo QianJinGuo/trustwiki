@@ -1,6 +1,6 @@
 const CITATION_RE = /\^\[([^\]\n]*)\]/g;
-const RANGE_ANCHOR = /^(.+)#L(\d+)-L(\d+)$/;
-const RANGE_COLON = /^(.+?):(\d+)-(\d+)$/;
+const RANGE_ANCHOR = /^([^:\s]+)#L(\d+)-L(\d+)$/;
+const RANGE_COLON = /^([^:\s]+):(\d+)-(\d+)$/;
 
 export function parseCitation(raw) {
   const trimmed = raw.trim();
@@ -24,7 +24,7 @@ function parseSource(part) {
 
 function finish(path, start, end, part) {
   path = path.trim();
-  if (!path || /\s/.test(path)) return { ok: false, reason: `bad source syntax: "${part}"` };
+  if (!path || /[\s:]/.test(path)) return { ok: false, reason: `bad source syntax: "${part}" (path cannot contain spaces or colons)` };
   if (start !== null && (start < 1 || end < 1)) return { ok: false, reason: `line numbers must be positive in "${part}"` };
   if (start !== null && start > end) return { ok: false, reason: `reversed line range in "${part}" (start > end)` };
   return { ok: true, source: { path, start, end } };

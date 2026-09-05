@@ -4,20 +4,29 @@ import { walkVault } from './walk.js';
 import { parseFrontmatter } from './frontmatter.js';
 import { extractWikilinks } from './links.js';
 import { findCitations } from './citations.js';
+import { normalizeTarget } from './resolve.js';
 import { RULES } from './rules/index.js';
 
-export function normalizeTarget(t) { return t.trim().replace(/\.md$/, ''); }
+export { normalizeTarget };
 
 // Mask fenced code blocks and inline code spans so their contents are never
 // treated as live citations/wikilinks. Character- and line-preserving: every
-// line number in the masked text matches the original file.
+// line number in the masked text matches the original file. Fence state tracks
+// the delimiter type — a ``` line inside a ~~~ fence is content, not a closer.
 export function maskCode(body) {
   const lines = body.split('\n');
-  let inFence = false;
+  const fenceRe = /^\s*(`{3,}|~{3,})/;
+  let fenceMark = null;
   const masked = lines.map(line => {
-    if (/^\s*(```|~~~)/.test(line)) { inFence = !inFence; return ''; }
-    if (inFence) return '';
-    return line.replace(/`[^`\n]*`/g, m => '`' + ' '.repeat(Math.max(0, m.length - 2)) + '`');
+    const m = line.match(fenceRe);
+    if (m) {
+      const mark = m[1][0];
+      if (!fenceMark) { fenceMark = mark; return ''; }
+      if (mark === fenceMark) { fenceMark = null; }
+      return '';
+    }
+    if (fenceMark) return '';
+    return line.replace(/`[^`\n]*`/g, x => '`' + ' '.repeat(Math.max(0, x.length - 2)) + '`');
   });
   return masked.join('\n');
 }
@@ -48,13 +57,15 @@ export async function lintVault(vaultPath, config) {
   if (config.index) {
     try {
       const raw = await readFile(join(vaultPath, config.index), 'utf8');
+      const indexMasked = maskCode(raw);
       model.indexRaw = raw;
       model.indexEntries = new Set();
       model.indexLines = new Map();
-      const indexLines = raw.split('\n');
+      const indexLines = indexMasked.split('\n');
       for (let i = 0; i < indexLines.length; i++) {
         for (const m of indexLines[i].matchAll(/\[\[([^\]|\n]+)/g)) {
-          const norm = normalizeTarget(m[1]);
+          const norm = normalizeTarget(m[1].split('#')[0]);
+          if (!norm) continue;
           model.indexEntries.add(norm);
           if (!model.indexLines.has(norm)) model.indexLines.set(norm, i + 1);
         }
@@ -71,7 +82,7 @@ export async function lintVault(vaultPath, config) {
     const bodyStartLine = fm.bodyStartLine;
     const body = maskCode(fm.body);
     model.files.push({
-      relPath: rel, text, fm, body: fm.body, bodyStartLine,
+      relPath: rel, text, fm, body, bodyStartLine, // body is masked: rules never see code-fence content
       links: extractWikilinks(body, bodyStartLine),
       ...findCitations(body, bodyStartLine),
       paragraphs: proseParagraphs(body, bodyStartLine),
@@ -91,7 +102,8 @@ export async function lintVault(vaultPath, config) {
     }
   }
   if (indexUnreadable) {
-    findings.push({ severity: 'warn', rule: 'config.index-unreadable', file: config.index, line: 1,
+    findings.push({ severity: config.rules['config.index-unreadable'] || 'warn',
+      rule: 'config.index-unreadable', file: config.index, line: 1,
       message: 'configured index could not be read; index rules disabled',
       hint: 'check the path or remove the index key from .trustwiki.json' });
   }

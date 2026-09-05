@@ -6,6 +6,7 @@ export const RULE_IDS = [
   'link.broken', 'link.index-missing', 'link.type-mismatch', 'page.orphan',
   'citation.malformed', 'citation.target-missing',
   'provenance.excess-inferred', 'provenance.low-confidence', 'provenance.contradicted',
+  'config.index-unreadable',
 ];
 
 const DEFAULT_SEVERITY = {
@@ -13,6 +14,7 @@ const DEFAULT_SEVERITY = {
   'link.broken': 'error', 'link.index-missing': 'warn', 'link.type-mismatch': 'warn', 'page.orphan': 'warn',
   'citation.malformed': 'error', 'citation.target-missing': 'error',
   'provenance.excess-inferred': 'warn', 'provenance.low-confidence': 'warn', 'provenance.contradicted': 'warn',
+  'config.index-unreadable': 'warn',
 };
 
 export const DEFAULT_CONFIG = {
@@ -36,6 +38,8 @@ export async function loadConfig(vaultPath, explicitPath) {
     user = JSON.parse(await readFile(configPath, 'utf8'));
   } catch (e) {
     if (e.code !== 'ENOENT') return { error: { message: `invalid ${configPath}: ${e.message}` } };
+    // an explicitly passed config file must exist — silent fallback would hide typos
+    if (explicitPath) return { error: { message: `config file not found: ${explicitPath}` } };
   }
   const rules = { ...DEFAULT_CONFIG.rules, ...(user.rules || {}) };
   const unknown = Object.keys(rules).filter(id => !RULE_IDS.includes(id));

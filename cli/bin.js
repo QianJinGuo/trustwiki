@@ -16,14 +16,20 @@ let json = false, configFlag, bad;
 for (let i = 2; i < args.length; i++) {
   if (args[i] === '--json') json = true;
   else if (args[i] === '--config') {
-    if (i + 1 >= args.length) { bad = '--config requires a file argument'; break; }
+    if (i + 1 >= args.length || args[i + 1].startsWith('--')) { bad = '--config requires a file argument'; break; }
     configFlag = args[++i];
   } else { bad = `unknown argument: ${args[i]}`; break; }
 }
 if (bad) { console.error(`trustwiki: ${bad}`); usage(); process.exit(2); }
 const { config, error } = await loadConfig(vault, configFlag);
 if (error) { console.error(`trustwiki: ${error.message}`); process.exit(2); }
-const findings = await lintVault(config.vaultPath, config);
+let findings;
+try {
+  findings = await lintVault(config.vaultPath, config);
+} catch (e) {
+  console.error(`trustwiki: failed to lint ${config.vaultPath}: ${e.message}`);
+  process.exit(2);
+}
 console.log(json ? formatJson(findings) : formatText(findings));
 // exitCode (not process.exit) so large stdout writes flush before teardown
 process.exitCode = findings.some(f => f.severity === 'error') ? 1 : 0;

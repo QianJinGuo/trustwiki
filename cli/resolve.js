@@ -1,4 +1,4 @@
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, statSync, realpathSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 
 export function normalizeTarget(t) { return t.trim().replace(/\.md$/, ''); }
@@ -13,13 +13,20 @@ export function resolveTarget(t, cfg) {
   return cands;
 }
 
-// Contained, regular-file existence check. Rejects `../` escapes, symlink
-// escapes, and directory hits — a citation/probe must never leave the vault.
+// Contained, regular-file existence check. Realpath-based: an in-vault symlink
+// pointing outside the vault resolves outside and is rejected. Rejects `../`
+// escapes and directory hits — a citation/probe must never leave the vault.
 export function resolveInVault(vaultPath, cand) {
-  const vaultRoot = resolve(vaultPath);
-  const abs = resolve(vaultRoot, cand);
-  if (abs !== vaultRoot && !abs.startsWith(vaultRoot + sep)) return null;
+  const abs = resolve(vaultPath, cand);
   if (!existsSync(abs)) return null;
-  try { if (!statSync(abs).isFile()) return null; } catch { return null; }
-  return abs;
+  let rp, rootReal;
+  try {
+    rp = realpathSync(abs);
+    rootReal = realpathSync(vaultPath);
+  } catch {
+    return null;
+  }
+  if (rp !== rootReal && !rp.startsWith(rootReal + sep)) return null;
+  try { if (!statSync(rp).isFile()) return null; } catch { return null; }
+  return rp;
 }

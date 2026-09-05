@@ -9,7 +9,7 @@ export const rule = {
       const m = f.body.match(CALLOUT);
       const calloutTargets = m ? targetsIn(m[1]) : [];
       const fmList = (f.fm?.fields?.contradicted_by || '').replace(/[\[\]]/g, '');
-      const fmTargets = fmList ? fmList.split(',').map(s => s.trim()).filter(Boolean).map(t => t.replace(/\.md$/, '')) : [];
+      const fmTargets = fmList ? fmList.split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(t => t.replace(/\.md$/, '')) : [];
       if (m && !fmTargets.length) out.push({ file: f.relPath,
         line: f.bodyStartLine + f.body.slice(0, m.index).split('\n').length - 1,
         message: 'contradiction callout without contradicted_by in frontmatter',
