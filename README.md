@@ -13,72 +13,73 @@ English · [简体中文](README.zh.md)
 
 # trustwiki
 
-**Knowledge bases your agent can maintain — without lying to you.**
+**Your agent writes your notes. Who checks them?**
 
-Every claim cited. Contradictions surfaced. Rot detected.
-
-```bash
-npx trustwiki lint ./your-vault
-```
-
-trustwiki is a provenance linter and an operating method for knowledge bases
-maintained by AI agents. It does **not** build your wiki. It makes sure that
-when your agent does, every claim can be traced to a source, disagreements
-stay visible instead of being silently rewritten, and decay is measured —
-not discovered two months later.
-
-- **12 mechanical checks** — citation grammar, citation targets, uncited-inference ratio, confidence floor, contradiction consistency, broken links, index drift, orphans, placeholders
-- **One config file** — `.trustwiki.json`; nothing configured, everything still runs
-- **Zero dependencies** — Node 18+, one command, JSON output for CI
-- **Proven in production** — [operating stats](proof/STATS.md) from an agent-maintained wiki running since 2026-05
-
-## Why
-
-Agents are already writing knowledge bases. Without a trust layer they
-produce fluent slop: unattributed claims, silent contradiction resolution,
-links that rot. trustwiki is the discipline layer — the linter, the schema,
-and the method.
-
-## Quick start
+Every knowledge base maintained by an AI agent eventually rots the same way:
+claims nobody can trace, contradictions quietly rewritten away, links that
+die. trustwiki is the checker — it reads your markdown vault and tells you
+exactly where the rot is.
 
 ```bash
-git clone https://github.com/QianJinGuo/trustwiki && cd trustwiki
-npx trustwiki@alpha lint templates/demo-vault
+npx trustwiki lint ./your-notes
 ```
 
-You get a report like this (exit code 1 — errors present):
-
-![trustwiki linting the seeded demo vault — 8 findings](assets/demo.gif)
-
-```
-notes/sloppy-page.md
+```text
+notes/model-comparison.md
   L12   error citation.target-missing   citation target not found: sources/ghost.md
   L14   warn  provenance.excess-inferred 3/5 prose paragraphs uncited (>0.3)
   L16   warn  placeholder.present        placeholder text: TODO
-  ...
+  L18   error link.broken                 broken wikilink [[notes/dead-ref]]
+
 Σ 3 errors, 5 warnings across 3 files
 ```
 
-The eight findings are seeded in `templates/demo-vault` — a vault built to
-fail. `templates/starter-vault` is the same structure built to pass, and is
-the starting point for your own vault.
+That is a real report on a vault seeded to fail. [See it run (10s GIF)](#2-see-it-run) · [What each finding means](#what-each-check-catches)
 
-## The schema
+## Why it exists
 
-The citation grammar (`^[path:42-58]`), provenance frontmatter, and
-contradiction marking are specified, versioned, and frozen at
-[schema/spec.md](schema/spec.md) (中文版: [spec.zh.md](schema/spec.zh.md)).
-Implementations other than this linter are welcome.
+AI agents already write knowledge bases — research wikis, team docs, personal
+notes. Nobody proofreads them, because the volume is inhuman. The failure mode
+is **fluent slop**: confident prose, zero provenance, contradictions resolved
+by whoever edits last.
 
-## The method
+trustwiki is the discipline layer. It does **not** build your wiki — it makes
+sure that when your agent does, every claim traces to a source, disagreements
+stay visible, and decay is measured instead of discovered two months later.
 
-Four phases — **Ingest, Synthesize, Evolve, Gate** — as an installable agent
-skill: [SKILL.md](SKILL.md). Why each rule exists:
-[docs/method.md](docs/method.md) (中文版: [method.zh.md](docs/method.zh.md)).
+It is three things:
 
-## Configuration
+| Layer | What it is | Where |
+|---|---|---|
+| **A checker** | 12 mechanical checks: citations, contradictions, broken links, index drift, orphans | this CLI |
+| **A spec** | a frozen, versioned definition of "traceable" — the `^[source.md:42-58]` citation grammar | [schema/spec.md](schema/spec.md) |
+| **A method** | the four-phase operating discipline (Ingest → Synthesize → Evolve → Gate) your agent can install | [SKILL.md](SKILL.md) |
 
-Everything is optional. The two keys that matter:
+## Getting started
+
+### 1. Try it on the demo (30 seconds, nothing to install)
+
+```bash
+git clone https://github.com/QianJinGuo/trustwiki && cd trustwiki
+npx trustwiki lint templates/demo-vault     # a vault seeded to fail: 8 findings, exit 1
+npx trustwiki lint templates/starter-vault  # the same structure built to pass: exit 0
+```
+
+### 2. See it run
+
+![trustwiki linting the seeded demo vault — 8 findings](assets/demo.gif)
+
+### 3. Run it on your own vault
+
+Already keep notes in markdown (Obsidian, Logseq, plain files)? Just point at
+the directory. Zero config works:
+
+```bash
+npx trustwiki lint ~/Documents/my-notes
+```
+
+Most users then add one small `.trustwiki.json` at the vault root so the
+checker understands your layout:
 
 ```json
 {
@@ -88,14 +89,76 @@ Everything is optional. The two keys that matter:
 }
 ```
 
-Full reference in [schema/spec.md](schema/spec.md). Rule severities are
-`error | warn | off` per rule; exit codes are `0` clean, `1` errors,
-`2` usage/config.
+- `roots` — which directories to scan
+- `index` — your index file, if you keep one (enables index-drift checks)
+- `sourceDir` — where raw captured sources live (enables citation-target
+  checks, and exempts those pages from "author's voice" rules — they quote,
+  they don't cite)
 
-## Stats
+Full reference: [schema/spec.md](schema/spec.md).
 
-Numbers from the production vault, each with source and verification date:
-[proof/STATS.md](proof/STATS.md).
+### 4. Make your agent maintain the vault under the same rules
+
+Install the method as an agent skill: copy
+[SKILL.md](SKILL.md) into your agent's skills directory (Claude Code, Codex,
+and most CLIs support project or global skills). It teaches your agent the
+four phases — **Ingest → Synthesize → Evolve → Gate** — with the violation
+consequences that motivated each rule. The short version of the whole method
+is one line: **never write a claim your vault cannot trace.**
+
+### 5. Gate your CI (optional)
+
+```bash
+npx trustwiki lint ./your-notes        # exit 0 = clean, 1 = errors present
+npx trustwiki lint ./your-notes --json # machine-readable for CI bots
+```
+
+## What each check catches
+
+| check | catches | example |
+|---|---|---|
+| `citation.malformed` | citations that don't parse — decoration, not provenance | `^[maybe a source?]` |
+| `citation.target-missing` | cited files that don't exist | `^[sources/ghost.md]` |
+| `provenance.excess-inferred` | pages that are mostly uncited prose | 3/5 paragraphs, no `^[…]` |
+| `provenance.low-confidence` | pages admitting they're shaky | `confidence: 0.3` |
+| `provenance.contradicted` | conflicts marked in body but not frontmatter (or vice versa) | callout without `contradicted_by` |
+| `link.broken` | `[[wikilinks]]` that resolve to nothing | `[[notes/dead-ref]]` |
+| `link.index-missing` | pages missing from the index; index entries that dangle | either direction |
+| `page.orphan` | pages with almost no outbound links — islands rot first | 0 links |
+| `frontmatter.required` / `.fields` | missing metadata; sources missing `sha256` (how silent edits get caught) | no `created` date |
+| `placeholder.present` | TODO/FIXME posing as finished content | `TODO: finish` |
+
+Severity of each is configurable (`error | warn | off`), warnings never fail
+the build, and the full rule reference lives in
+[schema/spec.md](schema/spec.md).
+
+## Proven in production
+
+This tool is the extracted discipline of an agent-maintained wiki that has
+run since 2026-05: **8,658 pages, 4,162 raw sources, 0 lint errors** — every
+number with source and verification date in [proof/STATS.md](proof/STATS.md).
+Its precision was measured, not assumed: [evaluation round 1](docs/eval/precision-2026-09-05.md)
+found 49% precision, the fixes it motivated brought it to ~93% — the report,
+method, and disclosed sampler bug are public.
+
+## FAQ
+
+**Is this for Obsidian/Logseq users or for agent builders?**
+Both. If you keep markdown notes, `npx trustwiki lint` finds rot today. If
+you build agents, [SKILL.md](SKILL.md) makes your agent write vaults that
+pass the same check.
+
+**Does it modify my files?**
+No. It reads and reports only. There is no `--fix` on purpose: fixes that
+matter require knowing which source supports the claim, and no tool can
+guess that for you.
+
+**Does it send my notes anywhere?**
+No. Local files in, stdout out. Zero dependencies, zero telemetry.
+
+**My vault isn't agent-written — is this still useful?**
+Yes, if it has citations to check or links that can rot. The contradiction
+and broken-link checks help any markdown knowledge base.
 
 ## License
 
