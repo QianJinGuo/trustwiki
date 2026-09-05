@@ -56,6 +56,43 @@ already: every rule can be `off`, and a "docs site" preset
 findings across these corpora. Presets are a roadmap item, not a v1 fix —
 the honest v1 positioning is "for vaults that opt into the discipline."
 
+
+## Round 2b — corpus expanded (2026-09-05, same day)
+
+Added five mainstream corpora (strategy: sparse-clone, zero-config run):
+
+| corpus | md files | findings | factually-true sample |
+|---|---|---|---|
+| rust-book (src) | 112 | 117 | 4/4 (all "no frontmatter" — true; a book, correctly) |
+| zed-docs | 41 | 49 | 9/9 (frontmatter/orphan/inferred all true; GitBook `{% hint %}` markup counts as prose — documented) |
+| home-assistant developer docs | 603 | 938 | 7/7 true; note their "To-do list entity" doc triggers `placeholder.present` on the word "todo" in a **legitimate domain term** — the regex has no domain vocabulary (disclosed) |
+| kubernetes/website (content) | 8,192 | 23,218 | 11/11 true statements, but 3 NEW false-positive-in-spirit patterns below |
+
+### New false-positive-in-spirit patterns (factually-true strings, wrong reading)
+
+1. **Wikipedia-style reference links.** k8s blog posts use `[[2]](/docs/...)`
+   — MediaWiki-ish reference syntax where `[[2]]` is a display label with a
+   real markdown target. `link.broken` reads it as a wikilink to page "2".
+   True string, wrong interpretation. Affects wikilink parsing on non-Obsidian
+   corpora.
+2. **Regex literals inside backticks... after fence-mask gaps.**
+   `^[a-zA-Z]*$` inside `<tt>` HTML in k8s CEL docs is read as a citation
+   (`^[` at string start). Our masker covers markdown code fences and inline
+   backticks, not inline HTML tags. Pattern is rare (24/23,218) but real.
+3. **Domain vocabulary vs placeholder regex.** Home Assistant's "To-do list
+   entity" is a product domain term; `placeholder.present` counts the bare
+   word "todo". Word-boundary matching alone cannot know domain semantics.
+
+### Updated corpus totals (round 2 + 2b)
+
+8 corpora · 15,900+ md files scanned · ~54,000 findings · 68 samples:
+**0 fabricated findings; 6 samples (~9%) are factually-true strings read in
+the wrong frame** (patterns 1-3 above). All three are fixable engineering
+(reference-link syntax, inline-HTML masking, placeholder allowlist vocabulary)
+and are queued for v0.1.1 — they do not affect vaults written in the
+trustwiki idiom, only foreign-idiom corpora.
+
+
 ## Method disclosure
 
 - 3 corpora, 35 samples, seed 7, sampled per-rule with min-1 coverage
