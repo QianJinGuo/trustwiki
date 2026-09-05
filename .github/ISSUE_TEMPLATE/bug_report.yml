@@ -1,0 +1,71 @@
+name: 🐛 Bug report
+description: trustwiki flagged something wrong, or missed something it should catch
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing trustwiki. Two kinds of bug matter equally here:
+        a **false positive** (flagged something fine) and a **false negative**
+        (missed real rot). Both break the tool's promise.
+  - type: input
+    id: command
+    attributes:
+      label: Command and version
+      description: e.g. `npx trustwiki@alpha lint ./vault` — run `npx trustwiki@alpha --version` if unsure
+      placeholder: npx trustwiki@0.1.0-alpha.0 lint ./vault
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Bug kind
+      options:
+        - False positive (flagged content that is fine)
+        - False negative (should have flagged but didn't)
+        - Crash or wrong exit code
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: rule
+    attributes:
+      label: Rule involved (if known)
+      options:
+        - frontmatter.required
+        - frontmatter.fields
+        - placeholder.present
+        - link.broken
+        - link.index-missing
+        - link.type-mismatch
+        - page.orphan
+        - citation.malformed
+        - citation.target-missing
+        - provenance.excess-inferred
+        - provenance.low-confidence
+        - provenance.contradicted
+        - not sure
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Minimal markdown sample that reproduces it
+      description: Redact private content. A 5-line file is ideal.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+      description: What should the tool have said/done?
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS + Node version
+      placeholder: macOS 26, node 22.23
+    validations:
+      required: true

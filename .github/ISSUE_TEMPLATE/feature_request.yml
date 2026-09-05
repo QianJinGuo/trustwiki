@@ -1,0 +1,29 @@
+name: 💡 Feature request
+description: Suggest a check, output format, or integration
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The rot you are trying to see
+      description: Describe the failure mode in agent-maintained content this would surface — not the solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed check or change
+      description: If it is a new rule — what would it flag, what would it deliberately not flag?
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraint acknowledgment
+      options:
+        - label: I understand trustwiki adds no runtime dependencies and ships no auto-fix
+  - type: textarea
+    id: sample
+    attributes:
+      label: Example input → desired finding
+      render: markdown
