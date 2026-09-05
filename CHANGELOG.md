@@ -3,6 +3,26 @@
 All notable changes to this project are documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/); versioning: semver, `0.x` = unstable.
 
+## [0.1.1] — 2026-09-05
+
+Foreign-idiom compatibility release, driven by the round-2 external-vault
+evaluation (docs/eval/round2-external-vaults.md).
+
+### Fixed
+
+- `[[label]](url)` reference-style links (MediaWiki-ish display labels) no
+  longer parse as broken wikilinks
+- Inline HTML tag content (`<tt>`, `<code>`, …) is masked like code spans —
+  regex literals such as `^[a-zA-Z]*$` in HTML cells no longer read as citations
+- Placeholder detection is case/position-sensitive: bare lowercase "todo" in
+  prose (Spanish "todo", domain terms like "to-do list entity") no longer
+  fires; `TODO`, `FIXME`, `TBD` in caps and colon-anchored forms still do
+
+### Measured effect
+
+Foreign-corpus wrong-frame findings dropped from ~54,000 to single digits
+(>99.9%) across 8 public corpora; real TODO/FIXME markers are still found.
+
 ## [0.1.0-alpha.0] — 2026-09-05
 
 First public alpha. npm tag `alpha` (not `latest` yet).
