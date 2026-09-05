@@ -10,10 +10,11 @@ import { rule as citationTarget } from './citation-target-missing.js';
 import { rule as excessInferred } from './provenance-excess-inferred.js';
 import { rule as lowConfidence } from './provenance-low-confidence.js';
 import { rule as contradicted } from './provenance-contradicted.js';
+import { rule as staleClaim } from './provenance-stale-claim.js';
 
 export const RULES = [
   frontmatterRequired, frontmatterFields, placeholderPresent,
   linkBroken, indexMissing, typeMismatch, pageOrphan,
   citationMalformed, citationTarget,
-  excessInferred, lowConfidence, contradicted,
+  excessInferred, lowConfidence, contradicted, staleClaim,
 ];

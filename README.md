@@ -25,16 +25,18 @@ npx trustwiki lint ./your-notes
 ```
 
 ```text
-notes/model-comparison.md
+notes/benchmarks.md
+  L9    warn  provenance.stale-claim      source ingested 2026-06-08 — held 89d (half-life 59d)
+notes/sloppy-page.md
   L12   error citation.target-missing   citation target not found: sources/ghost.md
   L14   warn  provenance.excess-inferred 3/5 prose paragraphs uncited (>0.3)
-  L16   warn  placeholder.present        placeholder text: TODO
   L18   error link.broken                 broken wikilink [[notes/dead-ref]]
 
-Σ 3 errors, 5 warnings across 3 files
+Σ 3 errors, 6 warnings across 4 files
 ```
 
-That is a real report on a vault seeded to fail. [See it run (10s GIF)](#2-see-it-run) · [What each finding means](#what-each-check-catches)
+That is a real report on a vault seeded to fail — including a claim that has
+outlived its measured half-life. [See it run (10s GIF)](#2-see-it-run) · [What each finding means](#what-each-check-catches)
 
 ## Why it exists
 
@@ -53,7 +55,7 @@ It is three things:
   <img src="assets/three-layers.svg" alt="Three layers: the checker (npx trustwiki lint), the spec (frozen citation grammar), the method (SKILL.md)" width="100%">
 </p>
 
-- **A checker** — 12 mechanical checks: citations, contradictions, broken links, index drift, orphans
+- **A checker** — 13 mechanical checks: citations (grammar, targets, staleness), contradictions, broken links, index drift, orphans
 - **A spec** — a frozen, versioned definition of "traceable": [schema/spec.md](schema/spec.md)
 - **A method** — the four-phase discipline your agent installs: [SKILL.md](SKILL.md)
 
@@ -87,7 +89,8 @@ checker understands your layout:
 {
   "roots": ["notes", "sources"],
   "index": "index.md",
-  "sourceDir": "sources"
+  "sourceDir": "sources",
+  "halfLives": { "terminology": 30, "model-generation": 59, "release-expectation": 110 }
 }
 ```
 
@@ -96,6 +99,8 @@ checker understands your layout:
 - `sourceDir` — where raw captured sources live (enables citation-target
   checks, and exempts those pages from "author's voice" rules — they quote,
   they don't cite)
+- `halfLives` — claim-class → days until a cited claim is flagged stale
+  (sources opt in with `claim_class:` or `halflife_days:` in frontmatter)
 
 Full reference: [schema/spec.md](schema/spec.md).
 
@@ -153,6 +158,7 @@ npx trustwiki lint ./your-notes --json # machine-readable for CI bots
 | `provenance.excess-inferred` | pages that are mostly uncited prose | 3/5 paragraphs, no `^[…]` |
 | `provenance.low-confidence` | pages admitting they're shaky | `confidence: 0.3` |
 | `provenance.contradicted` | conflicts marked in body but not frontmatter (or vice versa) | callout without `contradicted_by` |
+| `provenance.stale-claim` | claims held past their measured half-life — verify or re-cite | 89d held, half-life 59d |
 | `link.broken` | `[[wikilinks]]` that resolve to nothing | `[[notes/dead-ref]]` |
 | `link.index-missing` | pages missing from the index; index entries that dangle | either direction |
 | `page.orphan` | pages with almost no outbound links — islands rot first | 0 links |

@@ -3,6 +3,24 @@
 All notable changes to this project are documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/); versioning: semver, `0.x` = unstable.
 
+## [0.2.0] — 2026-09-05
+
+Claim half-life annotation: v0.1 answered "does this claim have a citation";
+v0.2 answers "is this claim past its prime".
+
+### Added
+
+- `provenance.stale-claim` rule — source pages declare a half-life class
+  (`claim_class: model-generation`) or direct override (`halflife_days: 59`);
+  cited paragraphs held past the half-life are flagged with the held duration
+- `halfLives` config key — claim-class → days mapping; defaults measured on
+  the author's production wiki (terminology 30d, model-generation 59d,
+  release-expectation 110d)
+- `asOf` config key — audit "as of" a past date; makes runs deterministic
+- schema bumped to `trustwiki-schema v0.2` (additive: `claim_class`,
+  `halflife_days` frontmatter fields; nothing from v0.1 changed)
+- demo-vault gained a staleness fixture (golden contract now 9 findings)
+
 ## [0.1.1] — 2026-09-05
 
 Foreign-idiom compatibility release, driven by the round-2 external-vault

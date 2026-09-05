@@ -2,5 +2,6 @@
   "roots": ["notes", "sources"],
   "index": "index.md",
   "sourceDir": "sources",
-  "rules": { "page.orphan": "off" }
+  "rules": { "page.orphan": "off" },
+  "asOf": "2026-09-05"
 }

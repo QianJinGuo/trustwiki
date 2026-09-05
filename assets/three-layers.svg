@@ -7,10 +7,10 @@
   <!-- Layer 1: THE CHECKER -->
   <rect x="40" y="72" width="360" height="290" rx="14" fill="#10101a" stroke="#6366f1" stroke-width="1.5"/>
   <text x="220" y="112" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#6366f1">1 · THE CHECKER</text>
-  <text x="220" y="140" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5d5d75">12 mechanical checks</text>
+  <text x="220" y="140" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5d5d75">13 mechanical checks</text>
   <rect x="70" y="158" width="300" height="118" rx="8" fill="#07070c" stroke="#262636"/>
   <text x="86" y="182" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#f87171">error</tspan><tspan fill="#8b8ba3"> citation.target-missing</tspan></text>
-  <text x="86" y="204" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.excess-inferred</tspan></text>
+  <text x="86" y="204" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.stale-claim</tspan></text>
   <text x="86" y="226" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#f87171">error</tspan><tspan fill="#8b8ba3"> link.broken</tspan></text>
   <text x="86" y="248" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.contradicted</tspan></text>
   <text x="86" y="268" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#5d5d75">… and 8 more</text>

@@ -12,7 +12,7 @@ test('--json emits a parseable findings array; exit code is 1 (errors present)',
   try { out = execFileSync('node', [bin, 'lint', demo, '--json'], { encoding: 'utf8' }); }
   catch (e) { out = e.stdout; code = e.status; }
   const parsed = JSON.parse(out);
-  assert.ok(Array.isArray(parsed) && parsed.length === 8);
+  assert.ok(Array.isArray(parsed) && parsed.length === 9);
   assert.ok(parsed.every(f => ['rule', 'severity', 'file', 'line', 'message', 'hint'].every(k => k in f)));
   assert.equal(code, 1);
 });

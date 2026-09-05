@@ -26,5 +26,5 @@
   <text x="764" y="138" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" xml:space="preserve"><tspan fill="#5d5d75">L14 </tspan><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.excess-inferred</tspan></text>
   <text x="764" y="164" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" xml:space="preserve"><tspan fill="#5d5d75">L16 </tspan><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> placeholder.present</tspan></text>
   <text x="764" y="190" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" xml:space="preserve"><tspan fill="#5d5d75">L18 </tspan><tspan fill="#f87171">error</tspan><tspan fill="#8b8ba3"> link.broken</tspan></text>
-  <text x="764" y="228" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#eceef4">Σ 3 errors, 5 warnings <tspan fill="#34d399">— all traceable</tspan></text>
+  <text x="764" y="228" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#eceef4">Σ 3 errors, 6 warnings <tspan fill="#34d399">— all traceable</tspan></text>
 </svg>

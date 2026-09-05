@@ -6,7 +6,7 @@ export const RULE_IDS = [
   'link.broken', 'link.index-missing', 'link.type-mismatch', 'page.orphan',
   'citation.malformed', 'citation.target-missing',
   'provenance.excess-inferred', 'provenance.low-confidence', 'provenance.contradicted',
-  'config.index-unreadable',
+  'provenance.stale-claim', 'config.index-unreadable',
 ];
 
 const DEFAULT_SEVERITY = {
@@ -14,7 +14,16 @@ const DEFAULT_SEVERITY = {
   'link.broken': 'error', 'link.index-missing': 'warn', 'link.type-mismatch': 'warn', 'page.orphan': 'warn',
   'citation.malformed': 'error', 'citation.target-missing': 'error',
   'provenance.excess-inferred': 'warn', 'provenance.low-confidence': 'warn', 'provenance.contradicted': 'warn',
-  'config.index-unreadable': 'warn',
+  'provenance.stale-claim': 'warn', 'config.index-unreadable': 'warn',
+};
+
+// claim half-lives in days, measured on the author's production wiki
+// (terminology drifts in ~30d, model-generation claims in ~59d,
+// release-expectation claims in ~110d). Overridable per vault.
+export const DEFAULT_HALF_LIVES = {
+  terminology: 30,
+  'model-generation': 59,
+  'release-expectation': 110,
 };
 
 export const DEFAULT_CONFIG = {
@@ -26,6 +35,8 @@ export const DEFAULT_CONFIG = {
   inferredThreshold: 0.3,
   confidenceFloor: 0.5,
   inferredSkipTypes: ['source'],
+  halfLives: { ...DEFAULT_HALF_LIVES },
+  asOf: null, // audit "as of" a past date; null = today (also makes tests deterministic)
   rules: Object.fromEntries(RULE_IDS.map(id => [id, DEFAULT_SEVERITY[id]])),
 };
 
@@ -51,6 +62,8 @@ export async function loadConfig(vaultPath, explicitPath) {
     vaultPath: resolve(vaultPath), roots: merged.roots, index: merged.index, sourceDir: merged.sourceDir,
     typeByDir: merged.typeByDir || {}, minOutboundLinks: merged.minOutboundLinks,
     inferredThreshold: merged.inferredThreshold, confidenceFloor: merged.confidenceFloor,
-    inferredSkipTypes: merged.inferredSkipTypes || [], rules,
+    inferredSkipTypes: merged.inferredSkipTypes || [],
+    halfLives: { ...DEFAULT_HALF_LIVES, ...(user.halfLives || {}) },
+    asOf: merged.asOf || null, rules,
   } };
 }

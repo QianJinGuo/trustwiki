@@ -1,9 +1,10 @@
-# trustwiki-schema v0.1（中文版）
+# trustwiki-schema v0.2（中文版）
 
 ## 状态
 
-`trustwiki-schema v0.1`——2026-09-05 冻结。v0.2 之前只增不改。本规范由
-`trustwiki` linter 与同名 agent skill 实现，其他工具亦可实现。
+`trustwiki-schema v0.2`——2026-09-05。v0.1 冻结了引用文法；v0.2 新增断言
+半衰期标注（纯增量的加法，v0.1 内容零改动）。由 `trustwiki` linter 与同名
+agent skill 实现，其他工具亦可实现。
 
 ## 引用语法
 
@@ -63,6 +64,8 @@ start, end  := 正整数；start ≤ end
 | confidence       | float  | 0–1；低于下限（默认 0.5）会被标记             |
 | provenance_state | enum   | `extracted \| merged \| inferred \| ambiguous`|
 | contradicted_by  | list   | 与本页结论相左的页面 slug 列表                |
+| claim_class      | string | 本来源断言的半衰期类别；必须是 vault `halfLives` 配置的键 |
+| halflife_days    | number | 直接半衰期覆盖，优先于 `claim_class`          |
 
 ## 矛盾标记
 
@@ -92,12 +95,30 @@ npx trustwiki lint ./your-vault
 | inferredThreshold   | `0.3`    | 未引用散文段落占比上限                 |
 | confidenceFloor     | `0.5`    | 最低置信度                             |
 | inferredSkipTypes   | `["source"]` | 豁免推断占比的页面类型             |
+| halfLives           | terminology 30 / model-generation 59 / release-expectation 110 | 断言类别→被标过期的天数 |
+| asOf                | 今天 | 审计"截至"某过去日期（也使运行可复现）      |
 | rules               | 全开     | 逐规则 `error \| warn \| off`          |
 
 规则 id：`frontmatter.required`、`frontmatter.fields`、`placeholder.present`、
 `link.broken`、`link.index-missing`、`link.type-mismatch`、`page.orphan`、
 `citation.malformed`、`citation.target-missing`、
 `provenance.excess-inferred`、`provenance.low-confidence`、
-`provenance.contradicted`。
+`provenance.contradicted`、`provenance.stale-claim`、
+`config.index-unreadable`。
+
+### 断言半衰期（v0.2）
+
+被引用的断言会过期。v0.2 允许来源页声明其断言的衰减速度：
+
+```yaml
+claim_class: model-generation    # 经 halfLives 配置解析
+# 或直接：
+halflife_days: 59
+```
+
+`provenance.stale-claim` 随后标记任何引用段落：其来源被持有超过半衰期。
+年龄 = 审计日期 − 来源 `ingested`（即知识库"持有"该断言的时长）。未分类
+或无日期的来源永远不会被标记——规则不做猜测。默认半衰期（30/59/110 天）
+测自作者的生产 wiki；可按 vault 通过 `halfLives` 覆盖。
 
 退出码：`0` 干净（允许警告）、`1` 存在 error、`2` 配置或用法错误。

@@ -1,10 +1,11 @@
-# trustwiki-schema v0.1
+# trustwiki-schema v0.2
 
 ## Status
 
-`trustwiki-schema v0.1` — frozen 2026-09-05. Additions only, never rewrites,
-until v0.2. This schema is implemented by the `trustwiki` linter and the
-`trustwiki` agent skill; other tools MAY implement it.
+`trustwiki-schema v0.2` — 2026-09-05. v0.1 froze the citation grammar; v0.2
+adds claim half-life annotation (additive only, nothing from v0.1 changed).
+Implemented by the `trustwiki` linter and the `trustwiki` agent skill; other
+tools MAY implement it.
 
 ## Citation grammar
 
@@ -67,6 +68,8 @@ Optional provenance fields:
 | confidence       | float  | 0–1; below the floor (default 0.5) is flagged    |
 | provenance_state | enum   | `extracted \| merged \| inferred \| ambiguous`   |
 | contradicted_by  | list   | slugs of pages that disagree with this one       |
+| claim_class      | string | half-life class of this source's claims; must be a key of the vault's `halfLives` config |
+| halflife_days    | number | direct half-life override, wins over `claim_class` |
 
 ## Contradiction marking
 
@@ -98,13 +101,32 @@ Configuration lives in `.trustwiki.json` at the vault root (all keys optional):
 | inferredThreshold   | `0.3`     | max share of uncited prose paragraphs       |
 | confidenceFloor     | `0.5`     | minimum confidence                          |
 | inferredSkipTypes   | `["source"]` | page types exempt from inference ratio   |
+| halfLives           | terminology 30 / model-generation 59 / release-expectation 110 | claim-class → days until cited claims are flagged stale |
+| asOf                | today | audit "as of" a past date (also makes runs deterministic) |
 | rules               | all on    | per-rule `error \| warn \| off`             |
 
 Rule ids: `frontmatter.required`, `frontmatter.fields`, `placeholder.present`,
 `link.broken`, `link.index-missing`, `link.type-mismatch`, `page.orphan`,
 `citation.malformed`, `citation.target-missing`,
 `provenance.excess-inferred`, `provenance.low-confidence`,
-`provenance.contradicted`.
+`provenance.contradicted`, `provenance.stale-claim`,
+`config.index-unreadable`.
+
+### Claim half-lives (v0.2)
+
+Cited claims age. v0.2 lets a source page declare how fast its claims decay:
+
+```yaml
+claim_class: model-generation    # resolved via halfLives config
+# or directly:
+halflife_days: 59
+```
+
+`provenance.stale-claim` then flags any cited paragraph whose source has been
+held past its half-life: age = audit date − source `ingested` (how long the
+vault has HELD the claim). Unclassified or undated sources are never flagged —
+the rule does not guess. Default half-lives (30/59/110 days) are measured on
+the author's production wiki; override per vault via `halfLives`.
 
 Exit codes: `0` clean (warnings allowed), `1` at least one error,
 `2` configuration or usage error.

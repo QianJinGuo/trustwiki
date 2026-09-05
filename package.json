@@ -1,6 +1,6 @@
 {
   "name": "trustwiki",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Provenance linter and method for agent-maintained knowledge bases — every claim cited, contradictions surfaced, rot detected.",
   "type": "module",
   "bin": {
@@ -24,6 +24,9 @@
     "proof"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/QianJinGuo/trustwiki.git"

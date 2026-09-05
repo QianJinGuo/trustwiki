@@ -20,5 +20,6 @@ test('golden: demo-vault produces exactly these findings', async () => {
     'provenance.contradicted:notes/conflict-b.md:1',
     'provenance.excess-inferred:notes/sloppy-page.md:14',
     'provenance.low-confidence:notes/sloppy-page.md:1',
+    'provenance.stale-claim:notes/benchmarks.md:9',
   ]);
 });

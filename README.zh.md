@@ -24,16 +24,18 @@ npx trustwiki lint ./your-notes
 ```
 
 ```text
-notes/model-comparison.md
+notes/benchmarks.md
+  L9    warn  provenance.stale-claim      source ingested 2026-06-08 — held 89d (half-life 59d)
+notes/sloppy-page.md
   L12   error citation.target-missing   citation target not found: sources/ghost.md
   L14   warn  provenance.excess-inferred 3/5 prose paragraphs uncited (>0.3)
-  L16   warn  placeholder.present        placeholder text: TODO
   L18   error link.broken                 broken wikilink [[notes/dead-ref]]
 
-Σ 3 errors, 5 warnings across 3 files
+Σ 3 errors, 6 warnings across 4 files
 ```
 
-这是一座"造出来就是为了失败"的知识库上的真实报告。[看它运行（10 秒 GIF）](#2-看它运行) · [每条 finding 是什么意思](#每条检查抓什么)
+这是一座"造出来就是为了失败"的知识库上的真实报告——其中一条断言已经
+活过了它被测得的半衰期。[看它运行（10 秒 GIF）](#2-看它运行) · [每条 finding 是什么意思](#每条检查抓什么)
 
 ## 为什么有它
 
@@ -51,7 +53,7 @@ trustwiki 是纪律层。它**不**替你长出 wiki——它保证的是：当�
   <img src="assets/three-layers.svg" alt="三层：检查器（npx trustwiki lint）、规范（冻结引用文法）、方法（SKILL.md）" width="100%">
 </p>
 
-- **检查器**——12 条机械检查：引用、矛盾、断链、索引漂移、孤页
+- **检查器**——13 条机械检查：引用（文法/目标/过期）、矛盾、断链、索引漂移、孤页
 - **规范**——"可溯源"的冻结版本化定义：[schema/spec.zh.md](schema/spec.zh.md)
 - **方法**——你的 agent 可安装的四阶段纪律：[SKILL.md](SKILL.md)
 
@@ -84,7 +86,8 @@ npx trustwiki lint ~/Documents/my-notes
 {
   "roots": ["notes", "sources"],
   "index": "index.md",
-  "sourceDir": "sources"
+  "sourceDir": "sources",
+  "halfLives": { "terminology": 30, "model-generation": 59, "release-expectation": 110 }
 }
 ```
 
@@ -92,6 +95,8 @@ npx trustwiki lint ~/Documents/my-notes
 - `index`——你的索引文件（可选，声明后启用索引漂移检查）
 - `sourceDir`——原始抓取来源所在目录（启用引用目标检查；这些页豁免
   "作者声音"类规则——它们引用来源，不需要引用自己）
+- `halfLives`——断言类别→过期天数（来源页用 `claim_class:` 或
+  `halflife_days:` frontmatter 选择加入）
 
 完整参考：[schema/spec.zh.md](schema/spec.zh.md)。
 
@@ -145,6 +150,7 @@ npx trustwiki lint ./your-notes --json # 机读输出，给 CI bot
 | `provenance.excess-inferred` | 大部分段落无引用的页面 | 3/5 段落没有 `^[…]` |
 | `provenance.low-confidence` | 自己承认心虚的页面 | `confidence: 0.3` |
 | `provenance.contradicted` | 冲突只在正文标记、或只在 frontmatter 标记 | 有 callout 无 `contradicted_by` |
+| `provenance.stale-claim` | 断言持有超过其测得半衰期——复核或改引 | 已持有 89 天，半衰期 59 天 |
 | `link.broken` | 解析不到任何东西的 `[[wikilink]]` | `[[notes/dead-ref]]` |
 | `link.index-missing` | 页面不在索引里；或索引项悬空 | 双向都查 |
 | `page.orphan` | 几乎没有出链的页面——孤岛先腐烂 | 0 条出链 |
