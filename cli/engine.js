@@ -26,7 +26,12 @@ export function maskCode(body) {
       return '';
     }
     if (fenceMark) return '';
-    return line.replace(/`[^`\n]*`/g, x => '`' + ' '.repeat(Math.max(0, x.length - 2)) + '`');
+    // mask inline HTML tag content (<tt>, <code>, <kbd>…) — regex literals like
+    // ^[a-zA-Z]*$ live there in real-world docs (k8s CEL reference)
+    return line
+      .replace(/<([a-z][a-z0-9]*)\b[^>]*>([\s\S]*?)<\/\1>/gi,
+        (_, tag, inner) => `<${tag}>${' '.repeat(inner.length)}</${tag}>`)
+      .replace(/`[^`\n]*`/g, x => '`' + ' '.repeat(Math.max(0, x.length - 2)) + '`');
   });
   return masked.join('\n');
 }

@@ -1,4 +1,4 @@
-const WIKILINK_RE = /\[\[([^\]|\n]+)(?:\|([^\]\n]*))?\]\]/g;
+const WIKILINK_RE = /\[\[([^\]|\n]+)(?:\|([^\]\n]*))?\]\](?!\s*\()/g;
 
 export function extractWikilinks(body, bodyStartLine) {
   const out = [];

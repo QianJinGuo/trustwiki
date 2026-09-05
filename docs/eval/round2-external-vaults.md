@@ -92,6 +92,34 @@ the wrong frame** (patterns 1-3 above). All three are fixable engineering
 and are queued for v0.1.1 — they do not affect vaults written in the
 trustwiki idiom, only foreign-idiom corpora.
 
+## Round 2c — v0.1.1 fixes shipped and re-measured (2026-09-05)
+
+Three fixes, each with a regression test (test/v011.test.js):
+
+1. `[[label]](url)` reference-style links no longer parse as wikilinks
+   (negative lookahead on the trailing paren).
+2. Inline HTML tag content (`<tt>`, `<code>`, `<kbd>`…) is masked like code
+   spans — regex literals in HTML cells no longer read as citations.
+3. Placeholder markers are now case/position-sensitive: `TODO`, `FIXME`, `TBD`
+   in caps or followed by a colon count; bare lowercase "todo" in prose
+   (Spanish `harán todo lo posible`, domain terms like "to-do list entity")
+   does not.
+
+Re-measured on the foreign corpora:
+
+| metric | before | after |
+|---|---|---|
+| k8s link.broken | 21 | 1 (`[["$UARCH"]]` bash-in-blog — mask architecture, v0.2) |
+| k8s citation.* | 24 | 8 (0.03% — HTML block remnants in one zh-cn file; mask architecture, v0.2) |
+| k8s placeholder | 32 | 7 (all REAL TODO/FIXME markers — correct finds) |
+| HA placeholder | 1 (domain term) | **0** |
+| obsidian-help | unchanged; 15,967 broken wikilinks are REAL dangling links in their translated docs — the rule working as intended |
+
+Wrong-frame findings across all 8 corpora: ~54,000 → single digits (>99.9%
+reduction). Residual items share one root cause — the masker treats line-local
+constructs; HTML blocks and indented code need block-level masking (v0.2
+architecture item, not regex patches).
+
 
 ## Method disclosure
 
