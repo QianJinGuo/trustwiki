@@ -1,3 +1,16 @@
+<p align="center">
+  <img src="assets/hero.svg" alt="trustwiki — knowledge bases your agent can maintain, without lying to you" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/QianJinGuo/trustwiki/actions/workflows/ci.yml"><img src="https://github.com/QianJinGuo/trustwiki/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.npmjs.com/package/trustwiki"><img src="https://img.shields.io/npm/v/trustwiki/alpha" alt="npm v0.1.0-alpha.0"></a>
+  <img src="https://img.shields.io/node/v/trustwiki" alt="node >= 18">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license">
+</p>
+
+English · [简体中文](README.zh.md)
+
 # trustwiki
 
 **Knowledge bases your agent can maintain — without lying to you.**
@@ -30,10 +43,12 @@ and the method.
 
 ```bash
 git clone https://github.com/QianJinGuo/trustwiki && cd trustwiki
-npx trustwiki lint templates/demo-vault
+npx trustwiki@alpha lint templates/demo-vault
 ```
 
 You get a report like this (exit code 1 — errors present):
+
+![trustwiki linting the seeded demo vault — 8 findings](assets/demo.gif)
 
 ```
 notes/sloppy-page.md

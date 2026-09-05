@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="trustwiki — social preview">
+  <rect width="1280" height="640" fill="#07070c"/>
+  <rect x="1" y="1" width="1278" height="638" fill="none" stroke="#262636" stroke-width="2"/>
+
+  <!-- wordmark -->
+  <text x="90" y="170" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="88" font-weight="700" fill="#eceef4">trust<tspan fill="#6366f1">wiki</tspan></text>
+
+  <!-- tagline -->
+  <text x="92" y="240" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',Helvetica,Arial,sans-serif" font-size="34" fill="#8b8ba3">Knowledge bases your agent can maintain —</text>
+  <text x="92" y="288" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',Helvetica,Arial,sans-serif" font-size="34" font-weight="600" fill="#eceef4">without lying to you.</text>
+
+  <!-- command pill -->
+  <rect x="90" y="340" width="560" height="64" rx="12" fill="#10101a" stroke="#262636"/>
+  <text x="114" y="380" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" fill="#22d3ee">$ npx trustwiki lint ./your-vault</text>
+
+  <!-- three values -->
+  <circle cx="98" cy="458" r="5" fill="#22d3ee"/>
+  <text x="114" y="464" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="19" fill="#22d3ee">every claim cited</text>
+  <circle cx="392" cy="458" r="5" fill="#fbbf24"/>
+  <text x="408" y="464" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="19" fill="#fbbf24">contradictions surfaced</text>
+  <circle cx="746" cy="458" r="5" fill="#34d399"/>
+  <text x="762" y="464" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="19" fill="#34d399">rot detected</text>
+
+  <!-- proof strip -->
+  <text x="92" y="540" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="18" fill="#5d5d75">proven in production — 8,658 pages · 4,162 sources · 0 lint errors · since 2026-05</text>
+
+  <!-- url -->
+  <text x="92" y="588" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="18" fill="#6366f1">github.com/QianJinGuo/trustwiki</text>
+</svg>
