@@ -10,4 +10,4 @@ tags: [demo]
 
 Tea should be brewed at 100°C.^[sources/tea.md]
 
-> [!contradiction] 参见 [[notes/conflict-b]] 持相反观点
+> [!contradiction] see [[notes/conflict-b]] which holds the opposite view

@@ -14,7 +14,7 @@ First public alpha. npm tag `alpha` (not `latest` yet).
   contradiction consistency, broken/ambiguous links, index drift (both directions),
   orphans, frontmatter presence/values, placeholders
 - `trustwiki-schema v0.1` — frozen open specification: claim-level citation grammar,
-  provenance frontmatter, contradiction marking (schema/spec.md, 中文版 schema/spec.zh.md)
+  provenance frontmatter, contradiction marking (schema/spec.md; zh mirror schema/spec.zh.md)
 - `SKILL.md` — the four-phase method (Ingest → Synthesize → Evolve → Gate) as an installable agent skill
 - `templates/demo-vault` — seeded-defect fixture; doubles as the golden test contract (8 findings)
 - `templates/starter-vault` — clean starting vault

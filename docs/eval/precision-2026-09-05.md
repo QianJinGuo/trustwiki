@@ -5,9 +5,10 @@ Date: 2026-09-05 · Method: stratified sample (seed 42), n=53, pre-registered ca
 ## Why
 
 All prior evidence was correctness-level (unit tests, golden contract, migration
-parity against the vault the rules were distilled from). Rule/语料同源 = overfitting
-risk. This evaluation measures **precision**: of real findings on a production
-8,658-page vault, how many would an author act on?
+parity against the vault the rules were distilled from). Rules and evaluation
+corpus share the same origin = overfitting risk. This evaluation measures
+**precision**: of real findings on a production 8,658-page vault, how many
+would an author act on?
 
 ## Categories (pre-registered before sampling)
 

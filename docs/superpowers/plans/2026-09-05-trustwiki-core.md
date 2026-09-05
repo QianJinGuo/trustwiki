@@ -1375,7 +1375,7 @@ git commit -m "feat(rules): provenance.excess-inferred/.low-confidence/.contradi
 10
 11 Tea should be brewed at 100°C.^[sources/tea.md]
 12
-13 > [!contradiction] 参见 [[notes/conflict-b]] 持相反观点
+13 > [!contradiction] see [[notes/conflict-b]] which holds the opposite view
 ```
 
 ```
