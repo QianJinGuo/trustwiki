@@ -97,6 +97,30 @@ checker understands your layout:
 
 Full reference: [schema/spec.md](schema/spec.md).
 
+
+### Already have an Obsidian / Logseq vault?
+
+It works on your vault today, as-is — broken `[[wikilinks]]`, real TODOs, and
+dangling index entries are findable without any setup. If the provenance
+culture is not (yet) your vault's culture, switch off those rules and keep the
+checks that are language-agnostic:
+
+```json
+{
+  "rules": {
+    "provenance.excess-inferred": "off",
+    "provenance.low-confidence": "off",
+    "citation.target-missing": "off",
+    "frontmatter.required": "warn",
+    "frontmatter.fields": "off"
+  }
+}
+```
+
+That is the honest floor: **broken-link and placeholder detection help any
+markdown vault**; the citation layer becomes valuable when you start capturing
+sources (see [SKILL.md](SKILL.md) Phase: Ingest).
+
 ### 4. Make your agent maintain the vault under the same rules
 
 Install the method as an agent skill: copy

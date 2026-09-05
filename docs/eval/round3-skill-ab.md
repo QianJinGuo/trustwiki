@@ -42,5 +42,12 @@ B is not writing skill — it is that B's workflow contains a mirror.**
   task by an agent → linter verifies the result → claims in README
   ("every claim traces to a source") are true of the output.
 
-Artifacts: `/tmp/skill-exp/a-vault` and `/tmp/skill-exp/b-vault` (throwaway,
-not committed); this report carries the measurements.
+Artifacts: **committed and re-runnable** — [templates/eval-round3/](../../templates/eval-round3/)
+contains the exact task brief (`task.txt`) and both vaults:
+
+```bash
+npx trustwiki lint templates/eval-round3/a-vault   # baseline: 3 errors (no frontmatter), zero provenance
+npx trustwiki lint templates/eval-round3/b-vault   # method: 0 errors, 0 warnings, full citation graph
+```
+
+Anyone can re-run the measurement in 30 seconds.

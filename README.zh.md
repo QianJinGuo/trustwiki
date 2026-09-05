@@ -93,6 +93,28 @@ npx trustwiki lint ~/Documents/my-notes
 
 完整参考：[schema/spec.zh.md](schema/spec.zh.md)。
 
+
+### 已经有一个 Obsidian / Logseq 库？
+
+今天就能直接用——断掉的 `[[wikilink]]`、真实的 TODO、悬空的索引项，零配置
+即可找出。如果溯源文化还不是你的库的文化，把那部分规则先关掉，保留与语言
+无关的检查：
+
+```json
+{
+  "rules": {
+    "provenance.excess-inferred": "off",
+    "provenance.low-confidence": "off",
+    "citation.target-missing": "off",
+    "frontmatter.required": "warn",
+    "frontmatter.fields": "off"
+  }
+}
+```
+
+这是诚实的下限：**断链与占位符检查对任何 markdown 库都有用**；引用层在
+你开始捕获来源后才会显现价值（见 [SKILL.md](SKILL.md) Phase: Ingest）。
+
 ### 4. 让你的 agent 按同一套规则维护
 
 把方法装成 agent skill：复制 [SKILL.md](SKILL.md) 到你 agent 的 skills

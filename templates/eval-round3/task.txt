@@ -1,0 +1,8 @@
+任务：为团队知识库创建三个主题页（notes/ 目录下），基于以下两份来源材料：
+1. 来源一（关于 MCP）：Model Context Protocol 是 Anthropic 2024 年 11 月发布的开放协议，
+   用 USB-C 类比统一 AI 应用与数据源之间的连接。2025 年被 OpenAI、Google DeepMind 采纳，
+   事实标准初步形成。核心原语：tools、resources、prompts。
+2. 来源二（关于 agent 记忆）：agent 跨会话记忆的主流方案是文件式记忆（如 CLAUDE.md、
+   memory 目录）与向量库检索两类。文件式可版本控制、人类可读、对 agent 友好；
+   向量库适合大规模但引入基础设施。混合路线（文件为索引+向量做召回）是 2026 年的趋势判断。
+要求：三页建议——「MCP 是什么」「agent 记忆方案对比」「两者如何组合：有记忆的 MCP agent」。
