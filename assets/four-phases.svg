@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="250" viewBox="0 0 1200 250" role="img" aria-label="The four-phase method loop: Ingest, Synthesize, Evolve, Gate">
+  <rect width="1200" height="250" fill="#07070c"/>
+  <rect x="0.5" y="0.5" width="1199" height="249" fill="none" stroke="#262636"/>
+
+  <!-- phase boxes -->
+  <rect x="40" y="55" width="240" height="120" rx="12" fill="#10101a" stroke="#34d399"/>
+  <text x="160" y="88" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#34d399">1 · INGEST</text>
+  <text x="160" y="114" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">sources land first,</text>
+  <text x="160" y="132" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">hashed at capture time</text>
+  <text x="160" y="158" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#f87171">no hash → silent edits invisible</text>
+
+  <rect x="346" y="55" width="240" height="120" rx="12" fill="#10101a" stroke="#22d3ee"/>
+  <text x="466" y="88" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#22d3ee">2 · SYNTHESIZE</text>
+  <text x="466" y="114" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">every claim cited,</text>
+  <text x="466" y="132" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">inference marked as inference</text>
+  <text x="466" y="158" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#f87171">uncited prose = fluent slop</text>
+
+  <rect x="652" y="55" width="240" height="120" rx="12" fill="#10101a" stroke="#fbbf24"/>
+  <text x="772" y="88" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#fbbf24">3 · EVOLVE</text>
+  <text x="772" y="114" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">conflicts surface,</text>
+  <text x="772" y="132" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">index stays in sync</text>
+  <text x="772" y="158" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#f87171">silent rewrites lose the trail</text>
+
+  <rect x="958" y="55" width="202" height="120" rx="12" fill="#10101a" stroke="#6366f1"/>
+  <text x="1059" y="88" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#6366f1">4 · GATE</text>
+  <text x="1059" y="114" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">lint before done:</text>
+  <text x="1059" y="132" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#8b8ba3">exit 0 or it isn't finished</text>
+  <text x="1059" y="158" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#f87171">"probably passes" is not a gate</text>
+
+  <!-- arrows -->
+  <path d="M280 115 L340 115" stroke="#5d5d75" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M586 115 L646 115" stroke="#5d5d75" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M892 115 L952 115" stroke="#5d5d75" stroke-width="2" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#5d5d75" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- loop back: gate failures go back to evolve -->
+  <path d="M1059 175 L1059 205 L772 205 L772 181" stroke="#f87171" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arr2)"/>
+  <text x="916" y="226" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11" fill="#f87171">findings loop back — the Gate is why the vault stays honest</text>
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#f87171" stroke-width="1.5"/>
+    </marker>
+  </defs>
+</svg>

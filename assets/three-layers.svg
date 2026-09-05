@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="trustwiki three layers: checker, spec, method">
+  <rect width="1200" height="400" fill="#07070c"/>
+  <rect x="0.5" y="0.5" width="1199" height="399" fill="none" stroke="#262636"/>
+
+  <text x="600" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',Helvetica,Arial,sans-serif" font-size="19" fill="#8b8ba3">One problem: agent-written knowledge rots. Three layers of defense.</text>
+
+  <!-- Layer 1: THE CHECKER -->
+  <rect x="40" y="72" width="360" height="290" rx="14" fill="#10101a" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="220" y="112" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#6366f1">1 · THE CHECKER</text>
+  <text x="220" y="140" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5d5d75">12 mechanical checks</text>
+  <rect x="70" y="158" width="300" height="118" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="86" y="182" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#f87171">error</tspan><tspan fill="#8b8ba3"> citation.target-missing</tspan></text>
+  <text x="86" y="204" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.excess-inferred</tspan></text>
+  <text x="86" y="226" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#f87171">error</tspan><tspan fill="#8b8ba3"> link.broken</tspan></text>
+  <text x="86" y="248" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12"><tspan fill="#fbbf24">warn </tspan><tspan fill="#8b8ba3"> provenance.contradicted</tspan></text>
+  <text x="86" y="268" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#5d5d75">… and 8 more</text>
+  <rect x="70" y="296" width="300" height="40" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="220" y="321" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#22d3ee">$ npx trustwiki lint ./vault</text>
+
+  <!-- Layer 2: THE SPEC -->
+  <rect x="420" y="72" width="360" height="290" rx="14" fill="#10101a" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="600" y="112" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#818cf8">2 · THE SPEC</text>
+  <text x="600" y="140" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5d5d75">what "traceable" means, frozen</text>
+  <rect x="450" y="158" width="300" height="130" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="600" y="196" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" fill="#eceef4">^[source.md:42-58]</text>
+  <text x="600" y="226" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">claim-level citation grammar</text>
+  <text x="600" y="252" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">+ provenance frontmatter</text>
+  <text x="600" y="278" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">+ contradiction marking</text>
+  <rect x="450" y="296" width="300" height="40" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="600" y="321" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#818cf8">schema/spec.md · v0.1</text>
+
+  <!-- Layer 3: THE METHOD -->
+  <rect x="800" y="72" width="360" height="290" rx="14" fill="#10101a" stroke="#34d399" stroke-width="1.5"/>
+  <text x="980" y="112" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="17" font-weight="700" fill="#34d399">3 · THE METHOD</text>
+  <text x="980" y="140" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#5d5d75">installable agent discipline</text>
+  <rect x="830" y="158" width="300" height="118" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="846" y="184" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#34d399">Ingest</text><text x="930" y="184" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">sources land first + sha256</text>
+  <text x="846" y="208" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#34d399">Synthesize</text><text x="960" y="208" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">cite every claim</text>
+  <text x="846" y="232" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#34d399">Evolve</text><text x="940" y="232" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">conflicts surface, never hide</text>
+  <text x="846" y="256" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#34d399">Gate</text><text x="915" y="256" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#8b8ba3">lint clean = done</text>
+  <rect x="830" y="296" width="300" height="40" rx="8" fill="#07070c" stroke="#262636"/>
+  <text x="980" y="321" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#34d399">SKILL.md → your agent</text>
+</svg>

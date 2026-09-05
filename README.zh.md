@@ -47,11 +47,13 @@ trustwiki 是纪律层。它**不**替你长出 wiki——它保证的是：当�
 
 它是三样东西：
 
-| 层 | 是什么 | 在哪 |
-|---|---|---|
-| **检查器** | 12 条机械检查：引用、矛盾、断链、索引漂移、孤页 | 本 CLI |
-| **规范** | "可溯源"的冻结版本化定义——`^[source.md:42-58]` 引用文法 | [schema/spec.zh.md](schema/spec.zh.md) |
-| **方法** | 四阶段操作纪律（Ingest → Synthesize → Evolve → Gate），agent 可安装 | [SKILL.md](SKILL.md) |
+<p align="center">
+  <img src="assets/three-layers.svg" alt="三层：检查器（npx trustwiki lint）、规范（冻结引用文法）、方法（SKILL.md）" width="100%">
+</p>
+
+- **检查器**——12 条机械检查：引用、矛盾、断链、索引漂移、孤页
+- **规范**——"可溯源"的冻结版本化定义：[schema/spec.zh.md](schema/spec.zh.md)
+- **方法**——你的 agent 可安装的四阶段纪律：[SKILL.md](SKILL.md)
 
 ## 上手
 
@@ -118,10 +120,14 @@ npx trustwiki lint ~/Documents/my-notes
 ### 4. 让你的 agent 按同一套规则维护
 
 把方法装成 agent skill：复制 [SKILL.md](SKILL.md) 到你 agent 的 skills
-目录（Claude Code、Codex 和多数 CLI 都支持项目级或全局 skill）。它教你的
-agent 四个阶段——**Ingest → Synthesize → Evolve → Gate**——以及每条规则
-背后的违规后果。整个方法的一句话版本：**永远不要写下你的知识库无法溯源
-的论断。**
+目录（Claude Code、Codex 和多数 CLI 都支持项目级或全局 skill）。
+
+<p align="center">
+  <img src="assets/four-phases.svg" alt="四阶段循环：Ingest → Synthesize → Evolve → Gate；findings 回流" width="100%">
+</p>
+
+它教你的 agent 四个阶段，以及每条规则背后的违规后果。整个方法的一句话
+版本：**永远不要写下你的知识库无法溯源的论断。**
 
 ### 5. 进 CI 门禁（可选）
 
@@ -150,11 +156,21 @@ npx trustwiki lint ./your-notes --json # 机读输出，给 CI bot
 
 ## 生产验证
 
+<p align="center">
+  <img src="assets/precision-journey.svg" alt="精确率 49%→93%；8 个外部语料零捏造" width="100%">
+</p>
+
 本工具是一套从真实运行中的 agent 维护知识库抽出的纪律——该库自 2026-05
 运行至今：**8,658 页、4,162 个原始来源、0 lint errors**——每个数字带来源
-和核实日期，见 [proof/STATS.md](proof/STATS.md)。精确率是测出来的，不是
-假设的：[评估 round 1](docs/eval/precision-2026-09-05.md) 测得 49%，
-由此驱动的修复将其提到 ~93%——报告、方法、连抽样器的 bug 都公开。
+和核实日期，见 [proof/STATS.md](proof/STATS.md)。
+
+方法本身也做了同任务 A/B 对照——一个 agent 带 SKILL.md，一个不带：
+
+<p align="center">
+  <img src="assets/ab-experiment.svg" alt="无方法：3 个 lint error、无链接、无来源。有方法：0 error、11 链接、可溯源防篡改" width="100%">
+</p>
+
+30 秒复跑这个实验：[templates/eval-round3/](templates/eval-round3/) · 完整报告在 [docs/eval/](docs/eval/)。
 
 ## FAQ
 

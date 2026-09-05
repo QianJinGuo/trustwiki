@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="A/B: same task without the method versus with SKILL.md">
+  <rect width="1200" height="320" fill="#07070c"/>
+  <rect x="0.5" y="0.5" width="1199" height="319" fill="none" stroke="#262636"/>
+
+  <text x="600" y="46" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',Helvetica,Arial,sans-serif" font-size="19" fill="#8b8ba3">Same task, same sources — one agent with the method, one without.</text>
+
+  <!-- A card -->
+  <rect x="60" y="72" width="500" height="196" rx="14" fill="#10101a" stroke="#f87171" stroke-width="1.5"/>
+  <text x="310" y="106" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="16" font-weight="700" fill="#f87171">WITHOUT (default agent writing)</text>
+  <text x="90" y="140" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✗  3 lint errors — no frontmatter at all</text>
+  <text x="90" y="166" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✗  0 internal links — three content islands</text>
+  <text x="90" y="192" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✗  sources exist only in the prompt — gone after</text>
+  <text x="90" y="218" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✗  "is this true?" — permanently unanswerable</text>
+  <text x="90" y="250" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#5d5d75">fluent, organized, and unverifiable</text>
+
+  <!-- B card -->
+  <rect x="640" y="72" width="500" height="196" rx="14" fill="#10101a" stroke="#34d399" stroke-width="1.5"/>
+  <text x="890" y="106" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="16" font-weight="700" fill="#34d399">WITH SKILL.md (four phases)</text>
+  <text x="670" y="140" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✓  0 errors, 0 warnings — gate passed</text>
+  <text x="670" y="166" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✓  11 wikilinks + index, lint-verified both ways</text>
+  <text x="670" y="192" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✓  2 source pages with sha256 — tamper-evident</text>
+  <text x="670" y="218" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">✓  every claim resolves to a named source</text>
+  <text x="670" y="250" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#5d5d75">re-run it yourself: templates/eval-round3/</text>
+
+  <text x="600" y="300" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#6366f1">The difference is not writing skill — it's a mirror in the workflow. Cost: ~2× tokens.</text>
+</svg>

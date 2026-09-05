@@ -49,11 +49,13 @@ stay visible, and decay is measured instead of discovered two months later.
 
 It is three things:
 
-| Layer | What it is | Where |
-|---|---|---|
-| **A checker** | 12 mechanical checks: citations, contradictions, broken links, index drift, orphans | this CLI |
-| **A spec** | a frozen, versioned definition of "traceable" — the `^[source.md:42-58]` citation grammar | [schema/spec.md](schema/spec.md) |
-| **A method** | the four-phase operating discipline (Ingest → Synthesize → Evolve → Gate) your agent can install | [SKILL.md](SKILL.md) |
+<p align="center">
+  <img src="assets/three-layers.svg" alt="Three layers: the checker (npx trustwiki lint), the spec (frozen citation grammar), the method (SKILL.md)" width="100%">
+</p>
+
+- **A checker** — 12 mechanical checks: citations, contradictions, broken links, index drift, orphans
+- **A spec** — a frozen, versioned definition of "traceable": [schema/spec.md](schema/spec.md)
+- **A method** — the four-phase discipline your agent installs: [SKILL.md](SKILL.md)
 
 ## Getting started
 
@@ -125,10 +127,15 @@ sources (see [SKILL.md](SKILL.md) Phase: Ingest).
 
 Install the method as an agent skill: copy
 [SKILL.md](SKILL.md) into your agent's skills directory (Claude Code, Codex,
-and most CLIs support project or global skills). It teaches your agent the
-four phases — **Ingest → Synthesize → Evolve → Gate** — with the violation
-consequences that motivated each rule. The short version of the whole method
-is one line: **never write a claim your vault cannot trace.**
+and most CLIs support project or global skills).
+
+<p align="center">
+  <img src="assets/four-phases.svg" alt="The four-phase loop: Ingest → Synthesize → Evolve → Gate; findings loop back" width="100%">
+</p>
+
+It teaches your agent the four phases with the violation consequences that
+motivated each rule. The short version of the whole method is one line:
+**never write a claim your vault cannot trace.**
 
 ### 5. Gate your CI (optional)
 
@@ -158,12 +165,23 @@ the build, and the full rule reference lives in
 
 ## Proven in production
 
+<p align="center">
+  <img src="assets/precision-journey.svg" alt="Precision 49% to 93% after fixes; 8 foreign corpora, zero fabricated findings" width="100%">
+</p>
+
 This tool is the extracted discipline of an agent-maintained wiki that has
 run since 2026-05: **8,658 pages, 4,162 raw sources, 0 lint errors** — every
 number with source and verification date in [proof/STATS.md](proof/STATS.md).
-Its precision was measured, not assumed: [evaluation round 1](docs/eval/precision-2026-09-05.md)
-found 49% precision, the fixes it motivated brought it to ~93% — the report,
-method, and disclosed sampler bug are public.
+
+And the method itself was A/B tested on an identical task — one agent with
+SKILL.md, one without:
+
+<p align="center">
+  <img src="assets/ab-experiment.svg" alt="Without the method: 3 lint errors, no links, no sources. With it: 0 errors, 11 links, cited and tamper-evident" width="100%">
+</p>
+
+Re-run the experiment yourself in 30 seconds:
+[templates/eval-round3/](templates/eval-round3/) · full reports in [docs/eval/](docs/eval/).
 
 ## FAQ
 

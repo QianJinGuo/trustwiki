@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Measured, not assumed: precision 49% to 93% on the home vault; 8 foreign corpora, zero fabricated findings">
+  <rect width="1200" height="300" fill="#07070c"/>
+  <rect x="0.5" y="0.5" width="1199" height="299" fill="none" stroke="#262636"/>
+
+  <text x="70" y="48" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#eceef4">Measured, not assumed.</text>
+
+  <!-- left panel: precision journey -->
+  <text x="70" y="86" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">home-vault precision (round 1, n=53)</text>
+  <!-- bar 49% -->
+  <rect x="70" y="106" width="196" height="44" fill="#f87171" opacity="0.85"/>
+  <text x="82" y="133" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="15" font-weight="700" fill="#07070c">49%</text>
+  <text x="70" y="168" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11" fill="#5d5d75">v0 initial rules</text>
+  <!-- arrow -->
+  <path d="M290 128 L360 128" stroke="#5d5d75" stroke-width="2" marker-end="url(#pa)"/>
+  <text x="325" y="116" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#8b8ba3">source-page</text>
+  <text x="325" y="150" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5" fill="#8b8ba3">exemptions</text>
+  <!-- bar 93% -->
+  <rect x="372" y="106" width="240" height="44" fill="#34d399"/>
+  <text x="386" y="133" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="15" font-weight="700" fill="#07070c">93%</text>
+  <text x="372" y="168" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11" fill="#5d5d75">after fixes — earned by subtraction</text>
+  <defs>
+    <marker id="pa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#5d5d75" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- divider -->
+  <line x1="640" y1="90" x2="640" y2="250" stroke="#262636"/>
+
+  <!-- right panel: foreign corpora -->
+  <text x="690" y="86" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#8b8ba3">8 foreign corpora it has never seen</text>
+  <text x="690" y="132" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="34" font-weight="700" fill="#22d3ee">0</text>
+  <text x="722" y="132" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#8b8ba3">fabricated findings in 68 sampled across ~54k</text>
+  <text x="690" y="176" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#8b8ba3">rust-book · kubernetes · vscode · obsidian ·</text>
+  <text x="690" y="198" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="14" fill="#8b8ba3">home-assistant · zed · express · npm</text>
+  <text x="690" y="232" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" fill="#5d5d75">method, samples and disclosed sampler bug: docs/eval/</text>
+</svg>
