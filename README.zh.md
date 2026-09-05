@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/QianJinGuo/trustwiki/actions/workflows/ci.yml"><img src="https://github.com/QianJinGuo/trustwiki/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://www.npmjs.com/package/trustwiki"><img src="https://img.shields.io/npm/v/trustwiki/alpha" alt="npm v0.1.0-alpha.0"></a>
+  <a href="https://www.npmjs.com/package/trustwiki"><img src="https://img.shields.io/npm/v/trustwiki" alt="npm"></a>
   <img src="https://img.shields.io/node/v/trustwiki" alt="node >= 18">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license">
 </p>
